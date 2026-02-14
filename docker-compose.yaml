@@ -1,0 +1,15 @@
+version: '5.0'
+
+services:
+
+  generic-modular-rag-system:
+    build: .
+    container_name: generic-modular-rag-system
+    ports:
+      - "8008:8008"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
