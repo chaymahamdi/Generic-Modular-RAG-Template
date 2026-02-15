@@ -25,6 +25,7 @@ if __name__ == '__main__':
     Server(Config(
         app=app,
         host=app_settings.HOST,
-        port=app_settings.PORT, log_config=logging_config,
+        port=app_settings.PORT,
+        log_config=logging_config,
         workers=app_settings.NB_WORKERS
     )).run()
