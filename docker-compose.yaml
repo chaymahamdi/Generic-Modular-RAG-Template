@@ -1,10 +1,23 @@
 version: '5.0'
 
 services:
+  postgres-vector-database:
+    image: pgvector/pgvector:pg17
+    container_name: rag-system-postgres-db
+    environment:
+      POSTGRES_USER: rag_system_username
+      POSTGRES_PASSWORD: rag_system_password
+      POSTGRES_DB: rag_system_vector_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - vector_db_data:/var/lib/postgresql/data
 
   generic-modular-rag-system:
     build: .
     container_name: generic-modular-rag-system
+    depends_on:
+      - postgres-vector-database
     ports:
       - "8008:8008"
     networks:
@@ -13,3 +26,6 @@ services:
 networks:
   default:
     driver: bridge
+
+volumes:
+  vector_db_data:
