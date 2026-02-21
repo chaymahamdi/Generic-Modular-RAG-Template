@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
     - file: changelogs/changelog-add-document-table.yaml
+  - include:
+      - file: changelogs/changelog-add-content-column-to-document-table.yaml
