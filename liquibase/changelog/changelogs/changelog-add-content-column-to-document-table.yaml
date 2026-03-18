@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: addContentColumnToDocumentTable
+      author: Chayma Hamdi
+      changes:
+        - addColumn:
+            tableName: document
+            columns:
+              - column:
+                  name: content
+                  type: TEXT
+                  constraints:
+                    nullable: true
