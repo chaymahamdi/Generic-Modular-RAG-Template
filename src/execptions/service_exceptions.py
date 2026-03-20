@@ -1,0 +1,2 @@
+class SchemaMappingException(Exception):
+    pass
