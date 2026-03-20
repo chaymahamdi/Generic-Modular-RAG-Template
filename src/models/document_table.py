@@ -1,9 +1,12 @@
-from sqlalchemy import Column, String
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, relationship, mapped_column
 
 from src.models.common_models import BaseTable
 
-class DocumentTable(BaseTable):
-    __tablename__ = 'documents'
-    title=Column(String(255), nullable=False)
-    size=Column(String(50))
-    content= Column(String)
+
+class Document(BaseTable):
+    __tablename__ = 'document'
+    title: Mapped[str]= mapped_column(String(255), nullable=False)
+    size: Mapped[str]= mapped_column(String(50))
+    content: Mapped[str]= mapped_column(String)
+    chunks: Mapped[list["DocumentChunk"]]= relationship(back_populates="document", cascade="all, delete-orphan")
