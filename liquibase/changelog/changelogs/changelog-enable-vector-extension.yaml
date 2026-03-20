@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: createVectorExtension
-      author: Chayma Hamdi
-      changes:
-        - sql:
-            sql: |
-              CREATE EXTENSION IF NOT EXISTS vector;
