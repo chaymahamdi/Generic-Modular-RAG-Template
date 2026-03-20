@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+        - file: changelogs/changelog-enable-vector-extension.yaml
+  - include:
+    - file: changelogs/changelog-add-document-table.yaml
+  - include:
+      - file: changelogs/changelog-add-content-column-to-document-table.yaml
+  - include:
+       - file: changelogs/changelog-add-document-chunk-table.yaml
+  - include:
+      - file: changelogs/changelog-add-ivfflat-index-on-document-chunk-table.yaml
