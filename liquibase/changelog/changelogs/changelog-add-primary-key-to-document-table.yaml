@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: ensureDocumentIdPrimaryKey
-      author: Chayma Hamdi
-      changes:
-        - addPrimaryKey:
-            tableName: document
-            columnNames: id
-            constraintName: document_id_pk
