@@ -15,7 +15,7 @@ class DBHelper:
     # create a managed session, Thread-safety
     # for more information, check the difference between scoped_session vs session maker
     def create_session(self):
-        return scoped_session(sessionmaker(autocommit=False,autoflush=False, bind=self.engine))
+        return scoped_session(sessionmaker(autocommit=False,autoflush=False, bind=self.engine,expire_on_commit=False))
 
     @contextmanager
     def session(self) -> Generator[scoped_session, None, None]:

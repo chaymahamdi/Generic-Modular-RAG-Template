@@ -9,3 +9,5 @@ databaseChangeLog:
        - file: changelogs/changelog-add-document-chunk-table.yaml
   - include:
       - file: changelogs/changelog-add-ivfflat-index-on-document-chunk-table.yaml
+  - include:
+       - file: changelogs/changelog-add-source-language-columns-to-document-table.yaml
