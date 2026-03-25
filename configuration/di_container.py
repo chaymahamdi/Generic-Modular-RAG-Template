@@ -3,7 +3,7 @@ from dependency_injector import containers, providers
 from configuration.app_settings import AppSettings,VectorDatabaseConfig
 from src.models.db_helper import DBHelper
 from src.repositories.document_repository import DocumentRepository
-from src.services.document_service import DocumentService
+from src.services.document_service.implementations.document_service import DocumentService
 
 
 class ServiceDIContainer(containers.DeclarativeContainer):

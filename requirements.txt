@@ -5,4 +5,9 @@ uvicorn==0.40.0
 psycopg==3.3.3
 sqlalchemy==2.0.46
 pgvector==0.4.2
-dependency_injector==4.48.3
+dependency-injector~=4.48.3
+pymupdf4llm~=1.27.2.2
+langchain-text-splitters~=1.1.1
+langdetect==1.0.9
+python-multipart==0.0.22
+pymupdf==1.27.2.2
