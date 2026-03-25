@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: addSourceLanguageColumnsToDocumentTable
+      author: Chayma Hamdi
+      changes:
+        - addColumn:
+            tableName: document
+            columns:
+              - column:
+                  name: source
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: language
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: true
