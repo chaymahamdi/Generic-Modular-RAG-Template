@@ -21,7 +21,6 @@ Make sure you have the following installed:
 
 - **Python 3.14.14**
 - **Docker & Docker Compose**
----
 
 ### Installation
 
