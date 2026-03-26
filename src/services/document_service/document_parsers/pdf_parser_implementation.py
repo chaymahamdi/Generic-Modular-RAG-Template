@@ -16,6 +16,7 @@ class PDFParser(BaseParser):
         """
         doc = pymupdf.open(stream=document, filetype="pdf")
         markdown_parsed_text= to_markdown(doc,use_ocr=False,ignore_images=True)
+        doc.close()
         return ParsedDocument(content=markdown_parsed_text)
 
 
