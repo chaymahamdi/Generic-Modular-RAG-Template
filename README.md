@@ -18,7 +18,7 @@ The goal is not only to build a working system, but also to:
 
 Make sure you have the following installed:
 
-- **Python 3.14.14**
+- **Python 3.14.3**
 - **Docker & Docker Compose**
 
 ### Installation
