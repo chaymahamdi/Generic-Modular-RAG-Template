@@ -14,12 +14,14 @@ The goal is not only to build a working system, but also to:
 - Explore how pgvector works (indexes, similarity search, etc.) 
 
 ## Getting Started
+
 ### Prerequisites
 
 Make sure you have the following installed:
 
 - **Python 3.14.14**
 - **Docker & Docker Compose**
+---
 
 ### Installation
 
