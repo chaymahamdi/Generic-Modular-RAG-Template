@@ -1,5 +1,5 @@
 
-import pymupdf
+from pymupdf import open
 from pymupdf4llm import to_markdown
 
 from src.schemas.service_schemas import ParsedDocument
@@ -14,9 +14,6 @@ class PDFParser(BaseParser):
         :param document: BytesIO containing the PDF file
         :return
         """
-        doc = pymupdf.open(stream=document, filetype="pdf")
-        markdown_parsed_text= to_markdown(doc,use_ocr=False,ignore_images=True)
-        doc.close()
+        with open(stream=document, filetype="pdf") as doc:
+            markdown_parsed_text= to_markdown(doc,use_ocr=False,ignore_images=True)
         return ParsedDocument(content=markdown_parsed_text)
-
-
