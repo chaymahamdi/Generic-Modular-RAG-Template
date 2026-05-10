@@ -18,10 +18,10 @@ class DocumentService(IDocumentService):
     def __init__(self, document_repository: DocumentRepository):
         self.document_repository = document_repository
 
-    def get_document_by_id(self, document_id: UUID) -> DocumentBase:
+    async def get_document_by_id(self, document_id: UUID) -> DocumentBase:
         """get ingested document details by ID"""
         try:
-            result=self.document_repository.get_document_by_id(document_id)
+            result=await self.document_repository.get_document_by_id(document_id)
             return DocumentBase.model_validate(result)
         except (DocumentNotFound,DatabaseConnectionError):
             raise
@@ -30,7 +30,7 @@ class DocumentService(IDocumentService):
             raise SchemaMappingException(f"Error while mapping Document {document_id} to schema") from e
 
 
-    async def parse_document(self, document: UploadFile) -> DocumentBase:
+    async def parse_document(self, document: UploadFile) -> DocumentBase | None:
         """
           Parse an uploaded document and store it in the database.
 
@@ -43,20 +43,23 @@ class DocumentService(IDocumentService):
         document_content = await document.read()
 
         filename = document.filename
-        document_extension = get_document_extension(filename)
+        document_extension = get_document_extension(str(filename))
         document_size = str(document.size)
+        detected_language = None
+        if document_extension is not None:
+            parser = ParserFactory.get_parser(document_extension)
+            parsed_content = parser.parse_document(document_content)
+            if parsed_content is not None and parsed_content.content is not None:
+                detected_language = detect_language(parsed_content.content)
+            parsed_document = DocumentCreate(content=parsed_content.content, language=detected_language, title=filename,
+                                             size=document_size, source=FileFormat(document_extension).value)
 
-        parser = ParserFactory.get_parser(document_extension)
+            created_document = await self.document_repository.create_document(parsed_document)
 
-        parsed_content = parser.parse_document(document_content)
-        detected_language = detect_language(parsed_content.content)
-        parsed_document = DocumentCreate(content=parsed_content.content,language=detected_language,title=filename,
-                                       size=document_size,source=FileFormat(document_extension).value)
+            logger.info(f"Created Document {created_document.id}")
+            result = DocumentBase.model_validate(created_document)
+            return result
 
-        created_document = self.document_repository.create_document(parsed_document)
-
-        logger.info(f"Created Document {created_document.id}")
-        result= DocumentBase.model_validate(created_document)
-        return result
+        raise ValueError("Unable to detect the document format")
 
 

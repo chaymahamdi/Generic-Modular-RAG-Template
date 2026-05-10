@@ -1,5 +1,6 @@
 from uuid import UUID
 
+from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 
 from configuration.logging_configuration import logger
@@ -15,7 +16,7 @@ class DocumentRepository:
         """initiate the document repository with vector database helper"""
         self.db_helper = db_helper
 
-    def get_document_by_id(self, document_id: UUID) -> Document:
+    async def get_document_by_id(self, document_id: UUID) -> Document | None:
         """
          get the document by id in repository layer
             :param document_id: UUID of the document
@@ -23,11 +24,10 @@ class DocumentRepository:
         """
         try:
             with self.db_helper.session() as session:
-                document = (
-                    session.query(Document)
-                    .filter(Document.id == document_id)
-                    .one_or_none()
+                result = await session.execute(
+                    select(Document).filter(Document.id == document_id)
                 )
+                document = result.scalars().one_or_none()
 
                 if not document:
                     raise DocumentNotFound(document_id)
@@ -38,7 +38,7 @@ class DocumentRepository:
             logger.error(e)
             raise DatabaseConnectionError() from e
 
-    def create_document(self, document_data: DocumentCreate) -> Document:
+    async def create_document(self, document_data: DocumentCreate) -> Document:
         """
         Create a new document in the repository layer.
 
@@ -49,8 +49,8 @@ class DocumentRepository:
             with self.db_helper.session() as session:
                 new_document = Document(**document_data.model_dump())
                 session.add(new_document)
-                session.commit()
-                session.refresh(new_document)
+                await session.commit()
+                await session.refresh(new_document)
                 logger.info(f"Document {new_document.id} was created successfully")
                 return new_document
 

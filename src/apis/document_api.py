@@ -25,6 +25,6 @@ async def ingest_document(uploaded_file: UploadFile = File(...),
 
 @document_router.get("/{document_id}", response_model=DocumentBase)
 @inject
-def get_document(document_id: UUID,
+async def get_document(document_id: UUID,
                  document_service: DocumentService= Depends(Provide[ServiceDIContainer.document_service])) -> DocumentBase:
-    return document_service.get_document_by_id(document_id)
+    return await document_service.get_document_by_id(document_id)
