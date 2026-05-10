@@ -18,7 +18,7 @@ def detect_language(text:str) -> str| None:
         logger.error("Could not detect language using langdetect.")
     return None
 
-def get_document_extension(path:str) -> str| None:
+def get_document_extension(path:str) -> str | None:
     """
      gets the extension of the given path
     :param path: str of path

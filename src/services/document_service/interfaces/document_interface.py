@@ -10,7 +10,7 @@ from src.schemas.service_schemas import DocumentBase
 class IDocumentService(ABC):
 
     @abstractmethod
-    def get_document_by_id(self, document_id: UUID) -> DocumentBase:
+    async def get_document_by_id(self, document_id: UUID) -> DocumentBase:
         """
          get document data by id
         :param document_id: uuid of document
@@ -19,7 +19,7 @@ class IDocumentService(ABC):
         pass
 
     @abstractmethod
-    def parse_document(self, document:UploadFile) -> DocumentBase:
+    async def parse_document(self, document:UploadFile) -> DocumentBase:
         """
          ingest uploaded file in database by type
         :param document : BytesIO with file data
