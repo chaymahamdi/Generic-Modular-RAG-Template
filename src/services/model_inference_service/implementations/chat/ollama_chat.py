@@ -13,7 +13,11 @@ class OllamaChatModel(IChatModel):
         self.model_name = model_name
 
     async def generate(self, prompt: str, **kwargs) -> str | None:
-        """Generate a complete response from Ollama using chat API."""
+        """Generate a response from chatOllama.
+        :param prompt: Input prompt
+        :param kwargs: Additional keyword arguments
+        :return: Generated response
+        """
         response = await self.client.chat(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt}],
@@ -25,7 +29,11 @@ class OllamaChatModel(IChatModel):
         return response.message.content
 
     async def generate_stream(self, prompt: str, **kwargs) -> AsyncGenerator[str, None]:
-        """Stream response tokens from Ollama using chat API."""
+        """Stream response tokens from chatOllama.
+        :param prompt: Input prompt
+        :param kwargs: Additional keyword arguments
+        :return: Async generator of response tokens
+        """
         stream = await self.client.chat(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt}],
